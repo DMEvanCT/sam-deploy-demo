@@ -6,8 +6,6 @@ name: StripeIDProdelopmentDeploy
 # or API.
 on:
   push:
-    paths:
-      - 'StripeVerifyID/**'
     branches:
       - main
 
@@ -16,8 +14,6 @@ on:
 jobs:
   install-deploy:
     runs-on: ubuntu-latest
-    env:
-      working-directory: ./StripeVerifyID
 
     steps:
       # Runs a single command using the runners shell
@@ -26,7 +22,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: arn:aws:iam::005143714131:role/GithubActions-Role-ZW4DB7O0OLAJ
+          role-to-assume: arn:aws:iam::1234567890:role/GithubActions-Role-ABCD
           aws-region: us-east-1
       - name: Setup AWS SAM CLI
         uses: aws-actions/setup-sam@v1
