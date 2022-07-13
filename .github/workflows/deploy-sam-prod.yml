@@ -1,0 +1,36 @@
+# This is a basic workflow that is manually triggered
+
+name: StripeIDProdelopmentDeploy
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  push:
+    paths:
+      - 'StripeVerifyID/**'
+    branches:
+      - main
+
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  install-deploy:
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./StripeVerifyID
+
+    steps:
+      # Runs a single command using the runners shell
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::005143714131:role/GithubActions-Role-ZW4DB7O0OLAJ
+          aws-region: us-east-1
+      - name: Setup AWS SAM CLI
+        uses: aws-actions/setup-sam@v1
+      - name: SAM Deploy
+        run: |
+          sam build
+          sam deploy --no-confirm-changeset 
